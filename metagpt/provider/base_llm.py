@@ -147,6 +147,7 @@ class BaseLLM(ABC):
         else:
             message.extend(msg)
         logger.debug(message)
+        
         rsp = await self.acompletion_text(message, stream=stream, timeout=self.get_timeout(timeout))
         return rsp
 

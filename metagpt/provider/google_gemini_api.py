@@ -51,9 +51,27 @@ class GeminiLLM(BaseLLM):
 
         self.__init_gemini(config)
         self.config = config
-        self.model = "gemini-pro"  # so far only one model
+        self.model = self.config.model  # i added support for "gemini-1.5-pro-latest","gemini-1.0-pro-latest","gemini-1.0-pro-001
         self.pricing_plan = self.config.pricing_plan or self.model
-        self.llm = GeminiGenerativeModel(model_name=self.model)
+        self.safety_settings =[
+                            {
+                                "category": "HARM_CATEGORY_HARASSMENT",
+                                "threshold": "BLOCK_NONE"
+                            },
+                            {
+                                "category": "HARM_CATEGORY_HATE_SPEECH",
+                                "threshold": "BLOCK_NONE"
+                            },
+                            {
+                                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                                "threshold": "BLOCK_NONE"
+                            },
+                            {
+                                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                                "threshold": "BLOCK_NONE"
+                            },
+                            ]
+        self.llm = GeminiGenerativeModel(model_name=self.model, safety_settings=self.safety_settings)
 
     def __init_gemini(self, config: LLMConfig):
         if config.proxy:

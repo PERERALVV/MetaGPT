@@ -25,6 +25,7 @@ def get_metagpt_package_root():
             break
     else:
         package_root = Path.cwd()
+        # package_root = Path(__file__).parent.parent
 
     logger.info(f"Package root set to {str(package_root)}")
     return package_root
@@ -44,9 +45,9 @@ def get_metagpt_root():
 
 
 # METAGPT PROJECT ROOT AND VARS
-CONFIG_ROOT = Path.home() / ".metagpt"
 METAGPT_ROOT = get_metagpt_root()  # Dependent on METAGPT_PROJECT_ROOT
 DEFAULT_WORKSPACE_ROOT = METAGPT_ROOT / "workspace"
+CONFIG_ROOT = METAGPT_ROOT / "config"
 
 EXAMPLE_PATH = METAGPT_ROOT / "examples"
 EXAMPLE_DATA_PATH = EXAMPLE_PATH / "data"
